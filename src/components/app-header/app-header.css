@@ -1,13 +1,13 @@
 .app-header h1{
     font-size: 3rem;
-    color: rgb(56, 0, 0);
+    color: rgb(106, 70, 168);
 }
 .app-header h2{
     font-size: 1.5rem;
     line-height: 1.2em;
 }
 .bold{
-    color: rgb(56, 0, 0);
+    color: rgb(106, 70, 168);
     font-weight: bold;
     font-size: 1.5rem;
     line-height: 1.2em;
