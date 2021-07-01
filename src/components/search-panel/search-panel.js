@@ -1,7 +1,7 @@
 import React from 'react';
-const SearchPanel=()=>{
+const SearchPanel=({onSearch})=>{  
     return (
-    <input className="form-control" placeholder="What do you have to do"/>
+    <input className="form-control" placeholder="Search" onChange={onSearch}/>
     )
 }
 export default SearchPanel;

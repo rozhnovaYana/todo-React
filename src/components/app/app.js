@@ -19,7 +19,9 @@ class App extends Component{
             this.createNewTodo("Learn React"),
             this.createNewTodo("Drink Coffee"),
             this.createNewTodo("Listen to music")
-        ]
+        ],
+        searchValue:"",
+        filter:"All"
     }
     findIndex=(id)=>{
         return this.state.todoList.findIndex(el=>el.id===id)
@@ -60,6 +62,39 @@ class App extends Component{
             return this.onToggleProp(id, 'done', todoList)
         })
     }
+    onSearch=(e)=>{
+        this.setState({
+            searchValue:e.target.value
+        })
+    } 
+    onFilter=(filter)=>{
+        this.setState({
+            filter
+        })
+    }
+    onFilterHandler=()=>{
+        const {todoList, filter}=this.state
+        if(filter=="All"){
+            return todoList
+        }else if(filter=="Done"){
+            return todoList.filter(el=>el.done)
+        }else if(filter=="Important"){
+            return todoList.filter(el=>el.important)
+        }
+    }
+    onTodoRender=()=>{
+        const arr=this.onFilterHandler()
+        const {searchValue}=this.state
+        if(searchValue.length==0){
+            return arr
+        }else{
+            const newArr=arr.filter(el=>{
+                return (el.title.toUpperCase().indexOf(searchValue.toUpperCase())!==-1)
+            })
+            return newArr
+        }
+    }
+    
     render(){
         const done=this.state.todoList.filter(el=>el.done).length,
         important=this.state.todoList.filter(el=>el.important).length
@@ -67,10 +102,10 @@ class App extends Component{
             <div className="d-flex flex-column  app ">
                 <AppHeader done={done} important={important} />
                 <div className="d-flex">
-                <SearchPanel/>
-                <FilterPanel/>
+                <SearchPanel onSearch={this.onSearch}/>
+                <FilterPanel onFilter={this.onFilter}/>
                 </div>
-                <TodoList todos={this.state.todoList} 
+                <TodoList todos={this.onTodoRender()} 
                 onDeleted={this.onDeleted}
                 onImportant={this.onImportant}
                 onDone={this.onDone}
